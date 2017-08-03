@@ -18,7 +18,8 @@ public class UserController {
 	public ModelAndView show(@PathVariable int index) {
 		System.out.println("index = " + index);
 		ModelAndView mav = new ModelAndView("user/profile");
-		mav.addObject("user", users.get(index));
+		mav.addObject("user", users.get(index)).addObject("user", users.get(index));
+		
 		return mav;
 		
 	}
