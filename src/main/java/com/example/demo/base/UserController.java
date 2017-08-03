@@ -14,6 +14,34 @@ import com.example.demo.domain.User;
 public class UserController {
 	ArrayList<User> users = new ArrayList<>();
 
+	@GetMapping("/users/{userId}/form")
+	public ModelAndView showModify(@PathVariable String userId) {
+		ModelAndView mav = new ModelAndView("/user/updateForm");
+		
+		for(int i = 0; i<users.size(); i++) {
+			if( users.get(i).getUserId().equals(userId) ) {
+				mav.addObject("user",users.get(i));
+				break;
+			}
+		}
+		return mav;
+	}
+	
+	@PostMapping("/update")
+	public ModelAndView update(User user) {
+		System.out.println("userId = " + user.getUserId());
+		System.out.println("password = " + user.getPassword());
+		System.out.println("here");
+		for(int i = 0; i<users.size(); i++) {
+			if( users.get(i).getUserId().equals(user.getUserId()) && users.get(i).getPassword().equals(user.getPassword()) ) {
+				users.set(i, user);
+				System.out.println("users siez = " + users.size());
+				break;
+			}
+		}
+		return new ModelAndView("redirect:/users");
+	}
+	
 	@GetMapping("/users/{index}")
 	public ModelAndView show(@PathVariable int index) {
 		System.out.println("index = " + index);
