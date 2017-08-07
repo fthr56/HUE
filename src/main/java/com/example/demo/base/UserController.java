@@ -14,6 +14,21 @@ import com.example.demo.domain.User;
 public class UserController {
 	ArrayList<User> users = new ArrayList<>();
 
+	@GetMapping("/users/form")
+	public String form() {
+		return "user/form";
+	}
+	
+	@GetMapping("")
+	public String index() {
+		return "index";
+	}
+
+	@GetMapping("index")
+	public String indexHtml() {
+		return "index";
+	}
+	
 	@GetMapping("/users/{userId}/form")
 	public ModelAndView showModify(@PathVariable String userId) {
 		ModelAndView mav = new ModelAndView("/user/updateForm");
@@ -29,9 +44,6 @@ public class UserController {
 	
 	@PostMapping("/update")
 	public ModelAndView update(User user) {
-		System.out.println("userId = " + user.getUserId());
-		System.out.println("password = " + user.getPassword());
-		System.out.println("here");
 		for(int i = 0; i<users.size(); i++) {
 			if( users.get(i).getUserId().equals(user.getUserId()) && users.get(i).getPassword().equals(user.getPassword()) ) {
 				users.set(i, user);
@@ -60,6 +72,13 @@ public class UserController {
 		
 		return new ModelAndView("redirect:/users");
 	}
+
+//	@GetMapping("/users/{index}")
+//	public String show(@PathVariable int index, Model model) {
+//		model.addAttribute("user", users.get(index));
+//		return "user/profiel";
+//	}
+//	아래 코드와 같은 일을 한다고 생각하면 된다.(spring 내부서 스티링을 리턴해도 model 을 같이 딸려가는 듯)
 	
 	@GetMapping("/users")
 	public ModelAndView list() {
